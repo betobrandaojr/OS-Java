@@ -31,7 +31,7 @@ public enum Status {
 			}
 		}
 		
-		throw new IllegalArgumentException("Status Invalido!"+ cod);
+		throw new IllegalArgumentException("Prioridade Invalida!"+ cod);
 	}
-
 }
+
