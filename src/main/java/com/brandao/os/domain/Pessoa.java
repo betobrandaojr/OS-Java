@@ -2,32 +2,44 @@ package com.brandao.os.domain;
 
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.br.CPF;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity // se precisar incluir um nome na tabela, utilizar o comando @Entity(name =
+		// "TB_PESSOAS")
 public abstract class Pessoa {
 
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer pessoa_id;
 	private String nome;
+
+	@CPF
 	private String cpf;
 	private String telefone;
 
 	public Pessoa() {
 		super();
-
 	}
 
-	public Pessoa(Integer id, String nome, String cpf, String telefone) {
+	public Pessoa(Integer pessoa_id, String nome, String cpf, String telefone) {
 		super();
-		this.id = id;
+		this.pessoa_id = pessoa_id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getPessoa_id() {
+		return pessoa_id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPessoa_id(Integer pessoa_id) {
+		this.pessoa_id = pessoa_id;
 	}
 
 	public String getNome() {
@@ -56,7 +68,7 @@ public abstract class Pessoa {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, id);
+		return Objects.hash(pessoa_id);
 	}
 
 	@Override
@@ -68,7 +80,7 @@ public abstract class Pessoa {
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
+		return Objects.equals(pessoa_id, other.pessoa_id);
 	}
 
 }

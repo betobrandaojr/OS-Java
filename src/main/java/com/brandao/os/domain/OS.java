@@ -4,19 +4,40 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.brandao.os.domain.enuns.Prioridade;
-
 import com.brandao.os.domain.enuns.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity // se precisar incluir um nome na tabela, utilizar o comando @Entity(name =
+// "TB_ORDEM_SERVICO")
 public class OS {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/mm/yyyy hh:mm")
 	private LocalDateTime dataAbertura;
+	
+	@JsonFormat(pattern = "dd/mm/yyyy hh:mm")
 	private LocalDateTime dataFechamento;
 	private Integer prioridade;
 	private String observacoes;
 	private Integer status;
+	
+	@ManyToOne
+	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
-	private Client cliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
 	
 	public OS() {
 		super();
@@ -26,7 +47,7 @@ public class OS {
 	}
 	
 	public OS(Integer id, Prioridade prioridade,String observacoes,
-			Status status, Tecnico tecnico, Client cliente) {
+			Status status, Tecnico tecnico, Cliente cliente) {
 		super();
 		this.id = id;
 		this.setDataAbertura(LocalDateTime.now());
@@ -79,10 +100,10 @@ public class OS {
 	public void setTecnico(Tecnico tecnico) {
 		this.tecnico = tecnico;
 	}
-	public Client getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
-	public void setCliente(Client cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 	@Override
